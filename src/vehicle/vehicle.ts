@@ -25,7 +25,7 @@ export default class Vehicle {
     this.acceleration = Vector2.create(0, 0)
     this.mass = options.mass || 1
     this.maxSpeed = options.maxSpeed || 4
-    this.maxForce = options.maxForce || 100
+    this.maxForce = options.maxForce || 0.1
     this.wrap = {min: Vector2.create(0, 0), max: Vector2.create(0, 0)}
     this.wrapFlag = false
   }

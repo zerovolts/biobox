@@ -5,9 +5,8 @@ export default class AgentGraphic {
 
   constructor(scene: any) {
     this.frame = scene.nested()
-    this.body = this.frame.polygon('0,0 32,16 0,32 4,16').attr({fill: "#f06"})
-    this.text = this.frame.text("0")
-    //rect(32, 32)
+    this.body = this.frame.polygon('0,0 32,16 0,32 4,16').attr({fill: "#f06"}).center(0, 0)
+    //this.text = this.frame.text("0").center(16, 16)
     //this.line = scene.line(0, 0, 0, 0).stroke({ width: 3 })
   }
 
@@ -19,7 +18,7 @@ export default class AgentGraphic {
     this.body.transform({
       rotation: angle * (180 / Math.PI)
     })
-    this.text.text(neighbors.toString())
+    //this.text.text(neighbors.toString())
     // this.line.transform({
     //   x: this.vehicle.position.x,
     //   y: this.vehicle.position.y,

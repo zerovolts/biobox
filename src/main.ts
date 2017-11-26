@@ -23,6 +23,10 @@ function startGame() {
   const screenHeight = window.screen.height
   const scene = (SVG as any)("app").size(screenWidth, screenHeight).attr({background: "#222"})
 
+  scene.click((event: any) => {
+    new Agent(event.clientX, event.clientY, scene)
+  })
+
   ;(Array(20) as any).fill(null).map(() =>
     new Agent(
       Math.random() * screenWidth,
