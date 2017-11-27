@@ -5,7 +5,7 @@ import {Node, NodeGroup, WeightGroup, WeightLayer, WeightNetwork} from "./types"
 
 function computeNode(inputs: NodeGroup, weights: WeightGroup): Node {
   const weightedInputs = R.zipWith(R.multiply, inputs, weights)
-  const average = R.reduce(R.add, 0, weightedInputs) / inputs.length
+  const average = R.reduce(R.add, <any>0, weightedInputs) / inputs.length
   return sigmoid(average)
 }
 

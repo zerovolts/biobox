@@ -1,3 +1,7 @@
+/*
+ * Handles the physics calculations related to movement of an agent.
+ */
+
 import Vector2 from "./vector2"
 
 interface VehicleOptions {
@@ -7,7 +11,6 @@ interface VehicleOptions {
 }
 
 export default class Vehicle {
-  static all: Vehicle[] = []
   position: Vector2
   velocity: Vector2
   acceleration: Vector2
@@ -18,8 +21,6 @@ export default class Vehicle {
   wrapFlag: boolean
 
   constructor(x: number, y: number, options: VehicleOptions = {}) {
-    Vehicle.all.push(this)
-
     this.position = Vector2.create(x, y)
     this.velocity = Vector2.create(0, 0)
     this.acceleration = Vector2.create(0, 0)
@@ -33,20 +34,6 @@ export default class Vehicle {
   applyForce(force: Vector2): Vehicle {
     this.acceleration.add(force.scale(1 / this.mass)).limit(this.maxForce)
     return this
-  }
-
-  neighbors(radius: number): Vehicle[] {
-    const radiusSquared = radius * radius
-
-    return Vehicle.all.filter((vehicle: Vehicle) => {
-      if (this == vehicle) {
-        return false
-      }
-      const thisPosition = Vector2.create(this.position.x, this.position.y)
-      const magSq = thisPosition.sub(vehicle.position).magnitudeSquared
-
-      return (magSq <= radiusSquared) ? true : false
-    })
   }
 
   wrapPosition(min?: Vector2, max?: Vector2) {

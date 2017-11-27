@@ -5,6 +5,10 @@
   "author": "Zach Stone",
   "license": "MIT",
   "dependencies": {
+    "@types/es6-collections": "^0.5.31",
+    "@types/ramda": "^0.25.6",
+    "@types/svg.js": "^2.3.1",
+    "ava": "^0.23.0",
     "ramda": "^0.25.0",
     "svg.js": "^2.6.3",
     "ts-loader": "^3.1.1",
@@ -16,5 +20,13 @@
     "babel-preset-stage-0": "^6.24.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
+  },
+  "scripts": {
+    "test": "tsc && ava"
+  },
+  "ava": {
+    "files": [
+      "dist/test/**/*.js"
+    ]
   }
 }

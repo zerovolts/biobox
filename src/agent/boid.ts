@@ -1,8 +1,7 @@
-import Vehicle from "./vehicle"
+import Agent from "./agent"
 import Vector2 from "./vector2"
-import AgentGraphic from "./agent-graphic"
 
-interface AgentParameters {
+interface BoidParameters {
   pull?: number
   push?: number
   align?: number
@@ -10,17 +9,12 @@ interface AgentParameters {
   closeNeighborRadius?: number
 }
 
-export default class Agent {
-  static all: Agent[] = []
-  vehicle: Vehicle
-  graphic: AgentGraphic
-  parameters: AgentParameters
+export default class Boid extends Agent {
+  parameters: BoidParameters
 
   constructor(x: number, y: number, scene: any) {
-    Agent.all.push(this)
-
-    this.vehicle = new Vehicle(x, y)
-    this.graphic = new AgentGraphic(scene)
+    super(x, y, scene)
+    
     this.parameters = {
       pull: 1000,
       push: 200,
@@ -30,22 +24,30 @@ export default class Agent {
     }
   }
 
-  centerOfMass(neighbors: Vehicle[]): Vector2 {
+  logic() {
+    const neighbors = this.neighbors(this.parameters.neighborRadius)
+
+    if (neighbors.length > 0) {
+      this.vehicle.applyForce(this.calculateTotalForce(neighbors))
+    }
+  }
+
+  centerOfMass(neighbors: Agent[]): Vector2 {
     return neighbors
-      .map((vehicle: Vehicle) => vehicle.position)
+      .map((agent: Agent) => agent.vehicle.position)
       .reduce((pre: Vector2, cur: Vector2) => pre.add(cur), Vector2.zero())
       .div(neighbors.length)
   }
 
-  averageHeading(neighbors: Vehicle[]): Vector2 {
+  averageHeading(neighbors: Agent[]): Vector2 {
     return neighbors
-      .map((vehicle: Vehicle) => vehicle.velocity)
+      .map((agent: Agent) => agent.vehicle.velocity)
       .reduce((pre: Vector2, cur: Vector2) => pre.add(cur), Vector2.zero())
       .div(neighbors.length)
       .div(this.parameters.align)
   }
 
-  pushForce(neighbors: Vehicle[]): Vector2 {
+  pushForce(neighbors: Agent[]): Vector2 {
     const centerOfMass = this.centerOfMass(neighbors)
     return Vector2.zero()
       .add(this.vehicle.position)
@@ -53,7 +55,7 @@ export default class Agent {
       .div(this.parameters.push)
   }
 
-  pullForce(neighbors: Vehicle[]): Vector2 {
+  pullForce(neighbors: Agent[]): Vector2 {
     const centerOfMass = this.centerOfMass(neighbors)
     return Vector2.zero()
       .add(centerOfMass)
@@ -61,8 +63,8 @@ export default class Agent {
       .div(this.parameters.pull)
   }
 
-  calculateTotalForce(neighbors: Vehicle[]): Vector2 {
-    const closeNeighbors = this.vehicle.neighbors(this.parameters.closeNeighborRadius)
+  calculateTotalForce(neighbors: Agent[]): Vector2 {
+    const closeNeighbors = this.neighbors(this.parameters.closeNeighborRadius)
     const farNeighbors = neighbors.filter(neighbor =>
       !(closeNeighbors as any).includes(neighbor)
     )
@@ -79,24 +81,5 @@ export default class Agent {
     }
 
     return totalForce
-  }
-
-  update() {
-    const neighbors = this.vehicle.neighbors(this.parameters.neighborRadius)
-
-    if (neighbors.length > 0) {
-      this.vehicle.applyForce(this.calculateTotalForce(neighbors))
-    }
-
-    this.vehicle.update()
-  }
-
-  draw() {
-    this.graphic.update(
-      this.vehicle.position.x,
-      this.vehicle.position.y,
-      this.vehicle.velocity.angle,
-      this.vehicle.neighbors(this.parameters.neighborRadius).length
-    )
   }
 }

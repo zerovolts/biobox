@@ -10,7 +10,7 @@ export default class AgentGraphic {
     //this.line = scene.line(0, 0, 0, 0).stroke({ width: 3 })
   }
 
-  update(x: number, y: number, angle: number, neighbors: number) {
+  update(x: number, y: number, angle: number/*, neighbors: number*/) {
     this.frame.transform({
       x: x,
       y: y,
