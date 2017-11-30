@@ -2,7 +2,8 @@ import * as SVG from "svg.js"
 
 import NeuralNetwork from "./neural-network/index"
 import {NodeGroup, WeightNetwork} from "./neural-network/types"
-import Vector2 from "./agent/vector2"
+import Vector2 from "./data-structures/vector2"
+import Matrix2 from "./data-structures/matrix2"
 import Boid from "./agent/boid"
 
 const inputs: NodeGroup = [0.5, 0.4, 0.5]
@@ -12,10 +13,8 @@ const outputs: NodeGroup = NeuralNetwork.computeNetwork(inputs, weightNetwork)
 console.log(outputs)
 console.log(NeuralNetwork.randomWeightNetwork([3, 4, 3]))
 
-//;(window as any).vec = Vector2
-//;(window as any).vehicle = Vehicle
 ;(window as any).svg = SVG
-//;(window as any).agent = Agent
+;(window as any).Matrix2 = Matrix2
 
 function startGame() {
   const screenWidth = window.screen.width

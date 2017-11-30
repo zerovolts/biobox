@@ -8,6 +8,7 @@ export function step(x: number): number {
   return x < 0 ? 0 : 1
 }
 
-export function rectifiedLinear(x: number): number {
+// rectified linear unit
+export function relu(x: number): number {
   return R.max(0, x)
 }

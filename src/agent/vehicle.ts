@@ -2,7 +2,7 @@
  * Handles the physics calculations related to movement of an agent.
  */
 
-import Vector2 from "./vector2"
+import Vector2 from "../data-structures/vector2"
 
 interface VehicleOptions {
   mass?: number

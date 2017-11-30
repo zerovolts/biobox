@@ -1,5 +1,5 @@
 import Vehicle from "./vehicle"
-import Vector2 from "./vector2"
+import Vector2 from "../data-structures/vector2"
 import AgentGraphic from "./agent-graphic"
 
 export default class Agent {

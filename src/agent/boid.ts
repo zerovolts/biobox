@@ -1,5 +1,5 @@
 import Agent from "./agent"
-import Vector2 from "./vector2"
+import Vector2 from "../data-structures/vector2"
 
 interface BoidParameters {
   pull?: number
@@ -14,7 +14,7 @@ export default class Boid extends Agent {
 
   constructor(x: number, y: number, scene: any) {
     super(x, y, scene)
-    
+
     this.parameters = {
       pull: 1000,
       push: 200,
